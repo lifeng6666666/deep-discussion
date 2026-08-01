@@ -1,0 +1,778 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 30px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+header p {
+    font-size: 1.1em;
+    opacity: 0.9;
+}
+
+/* 流程进度条 */
+.workflow-progress {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: #f8f9fa;
+    border-bottom: 2px solid #e9ecef;
+    gap: 10px;
+}
+
+.workflow-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 20px;
+    border-radius: 8px;
+    background: white;
+    border: 2px solid #e0e0e0;
+    opacity: 0.5;
+    transition: all 0.3s ease;
+}
+
+.workflow-step.active {
+    opacity: 1;
+    border-color: #667eea;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.workflow-step.completed {
+    opacity: 1;
+    border-color: #4caf50;
+    background: #e8f5e9;
+}
+
+.step-icon {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.step-label {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.workflow-arrow {
+    font-size: 24px;
+    color: #999;
+    font-weight: bold;
+}
+
+.input-section {
+    padding: 30px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+#question-input {
+    width: 100%;
+    min-height: 120px;
+    padding: 15px;
+    font-size: 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    resize: vertical;
+    font-family: inherit;
+    margin-bottom: 15px;
+}
+
+#question-input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+#start-btn {
+    padding: 12px 40px;
+    font-size: 18px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    font-weight: 600;
+}
+
+#start-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+}
+
+#start-btn:active {
+    transform: translateY(0);
+}
+
+.controls {
+    padding: 20px 30px;
+    background: #f8f9fa;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.controls button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 500;
+}
+
+#play-all-btn {
+    background: #4caf50;
+    color: white;
+}
+
+#play-all-btn:hover {
+    background: #45a049;
+    transform: translateY(-1px);
+}
+
+#pause-btn {
+    background: #ff9800;
+    color: white;
+}
+
+#pause-btn:hover {
+    background: #f57c00;
+    transform: translateY(-1px);
+}
+
+.controls label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+}
+
+.controls select {
+    padding: 8px 12px;
+    font-size: 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 6px;
+    background: white;
+    cursor: pointer;
+}
+
+.controls select:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.convergence-bar {
+    margin: 20px 30px;
+    padding: 15px;
+    background: #f0f0f0;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+}
+
+.convergence-progress {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: linear-gradient(90deg, #4caf50 0%, #8bc34a 100%);
+    transition: width 0.5s ease;
+    opacity: 0.3;
+}
+
+.convergence-text {
+    position: relative;
+    z-index: 1;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.discussion-area {
+    padding: 30px;
+    max-height: 800px;
+    overflow-y: auto;
+    min-height: 400px;
+}
+
+.question {
+    font-size: 1.3em;
+    font-weight: bold;
+    padding: 15px;
+    background: #e3f2fd;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border-left: 4px solid #2196f3;
+}
+
+.announcement {
+    padding: 10px 15px;
+    background: #fff3e0;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    border-left: 4px solid #ff9800;
+    font-weight: 500;
+}
+
+.round-header {
+    font-size: 1.3em;
+    font-weight: bold;
+    padding: 10px 0;
+    margin: 20px 0 15px 0;
+    border-top: 3px solid #667eea;
+    color: #667eea;
+    text-align: center;
+}
+
+.speech-block {
+    margin-bottom: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.host-speech, .synthesizer-speech {
+    background: #e8f5e9;
+    border-left: 4px solid #4caf50;
+}
+
+.challenger-speech {
+    background: #fff3e0;
+    border-left: 4px solid #ff9800;
+}
+
+.proposer-speech {
+    background: #e3f2fd;
+    border-left: 4px solid #2196f3;
+}
+
+.voter-speech {
+    background: #f3e5f5;
+    border-left: 4px solid #9c27b0;
+}
+
+.refiner-speech {
+    background: #fff8e1;
+    border-left: 4px solid #ffc107;
+}
+
+.phase-header {
+    font-size: 1.2em;
+    font-weight: bold;
+    padding: 12px 20px;
+    margin: 25px 0 15px 0;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 6px;
+    text-align: center;
+}
+
+.phase-description {
+    font-size: 0.85em;
+    font-weight: normal;
+    opacity: 0.9;
+    margin-top: 6px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.vote-result {
+    padding: 15px;
+    background: #fce4ec;
+    border-radius: 8px;
+    margin: 15px 0;
+    border-left: 4px solid #e91e63;
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+.role-label {
+    font-size: 12px;
+    color: #666;
+    background: rgba(0, 0, 0, 0.08);
+    padding: 2px 8px;
+    border-radius: 10px;
+}
+
+.vote-tag {
+    font-size: 13px;
+    color: #fff;
+    background: #9c27b0;
+    padding: 2px 10px;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.improve-tag {
+    font-size: 13px;
+    color: #fff;
+    padding: 2px 10px;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.improve-tag.has-improvement {
+    background: #ff9800;
+}
+
+.improve-tag.no-improvement {
+    background: #4caf50;
+}
+
+.speech-header {
+    padding: 12px 15px;
+    background: rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.speech-header strong {
+    font-size: 1.1em;
+}
+
+.play-btn {
+    margin-left: auto;
+    padding: 6px 16px;
+    font-size: 14px;
+    background: #2196f3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.play-btn:hover {
+    background: #1976d2;
+}
+
+.speech-content {
+    padding: 15px;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    font-size: 15px;
+}
+
+.round-summary {
+    padding: 15px;
+    background: #f3e5f5;
+    border-radius: 8px;
+    margin: 15px 0;
+    border-left: 4px solid #9c27b0;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.convergence-notice {
+    padding: 15px;
+    background: #e8f5e9;
+    border-radius: 8px;
+    margin: 15px 0;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.1em;
+    border: 2px solid #4caf50;
+}
+
+.host-change {
+    padding: 10px 15px;
+    background: #e1f5fe;
+    border-radius: 6px;
+    margin: 10px 0;
+    border-left: 4px solid #03a9f4;
+    font-weight: 500;
+}
+
+.final-solution {
+    padding: 25px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 8px;
+    margin-top: 20px;
+    font-size: 1.1em;
+    line-height: 1.8;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.final-solution::before {
+    content: "🎯 ";
+    font-size: 1.3em;
+}
+
+/* 滚动条样式 */
+.discussion-area::-webkit-scrollbar {
+    width: 8px;
+}
+
+.discussion-area::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.discussion-area::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.discussion-area::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* 讨论列表页样式 */
+.discussion-list-section {
+    padding: 0 30px 30px 30px;
+}
+
+.list-title {
+    font-size: 1.3em;
+    color: #333;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.discussion-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.discussion-item-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: opacity 0.3s;
+}
+
+.discussion-item {
+    display: block;
+    flex: 1;
+    padding: 16px 20px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    border-left: 4px solid #667eea;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s;
+}
+
+.discussion-item:hover {
+    background: #eef1ff;
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+}
+
+.delete-btn {
+    padding: 10px 14px;
+    font-size: 18px;
+    background: #f8f9fa;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+.delete-btn:hover {
+    background: #ffebee;
+    border-color: #ef5350;
+    transform: scale(1.1);
+}
+
+.delete-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.item-question {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.item-meta {
+    display: flex;
+    gap: 15px;
+    font-size: 13px;
+    color: #888;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.item-status {
+    padding: 2px 10px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.status-ongoing {
+    background: #fff3e0;
+    color: #e65100;
+}
+
+.status-completed {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.empty-tip {
+    text-align: center;
+    padding: 40px;
+    color: #999;
+    font-size: 15px;
+}
+
+/* 讨论详情页样式 */
+.header-back {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.back-link {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    opacity: 0.9;
+    padding: 6px 14px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    transition: opacity 0.2s;
+}
+
+.back-link:hover {
+    opacity: 1;
+}
+
+.discussion-time {
+    font-size: 13px;
+    opacity: 0.8;
+}
+
+/* 播客功能样式 */
+.podcast-section {
+    padding: 0 30px 30px 30px;
+}
+
+.make-podcast-btn {
+    display: inline-block;
+    padding: 12px 28px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(238, 90, 111, 0.4);
+    transition: all 0.2s;
+}
+
+.make-podcast-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(238, 90, 111, 0.5);
+}
+
+.make-podcast-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.podcast-status {
+    padding: 12px 20px;
+    margin-top: 12px;
+    background: #fff3e0;
+    border-radius: 8px;
+    color: #666;
+    font-size: 14px;
+    text-align: center;
+}
+
+.podcast-player {
+    margin-top: 16px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+}
+
+.podcast-title {
+    font-size: 1.2em;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #ff6b6b;
+}
+
+.podcast-script-list {
+    max-height: 400px;
+    overflow-y: auto;
+    margin-bottom: 16px;
+    padding-right: 8px;
+}
+
+.podcast-segment {
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    background: #fff;
+    border-radius: 8px;
+    border-left: 3px solid #ddd;
+    transition: all 0.3s;
+}
+
+.podcast-segment.active {
+    border-left-color: #ff6b6b;
+    background: #fff5f5;
+    box-shadow: 0 2px 8px rgba(255, 107, 107, 0.2);
+    transform: scale(1.01);
+}
+
+.podcast-speaker {
+    font-size: 13px;
+    font-weight: 600;
+    color: #667eea;
+    margin-bottom: 6px;
+}
+
+.podcast-text {
+    font-size: 14px;
+    color: #444;
+    line-height: 1.6;
+}
+
+.podcast-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.podcast-play-btn, .podcast-pause-btn, .podcast-download-btn {
+    padding: 8px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.podcast-play-btn {
+    background: #ff6b6b;
+    color: #fff;
+}
+
+.podcast-play-btn:hover {
+    background: #ee5a6f;
+}
+
+.podcast-pause-btn {
+    background: #e0e0e0;
+    color: #555;
+}
+
+.podcast-pause-btn:hover {
+    background: #d0d0d0;
+}
+
+.podcast-download-btn {
+    background: #2196f3;
+    color: #fff;
+}
+
+.podcast-download-btn:hover {
+    background: #1976d2;
+}
+
+.podcast-download-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.podcast-progress-text {
+    font-size: 13px;
+    color: #888;
+}
+
+.podcast-script-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.podcast-script-list::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 3px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    
+    header h1 {
+        font-size: 2em;
+    }
+    
+    .input-section,
+    .controls,
+    .discussion-area {
+        padding: 20px;
+    }
+    
+    .controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .controls button {
+        width: 100%;
+    }
+    
+    .controls label {
+        justify-content: center;
+    }
+}

@@ -1,0 +1,5 @@
+flask==3.0.0
+flask-socketio==5.3.6
+edge-tts==7.2.8
+requests==2.31.0
+python-dotenv==1.2.2

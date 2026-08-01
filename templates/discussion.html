@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>讨论 - {{ discussion.question }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-back">
+                <a href="/" class="back-link">← 返回列表</a>
+                <span class="discussion-time">🕐 {{ discussion.created_at }}</span>
+            </div>
+            <h1>🎙️ {{ discussion.question }}</h1>
+            <p id="discussion-status">
+                {% if discussion.status == 'ongoing' %}讨论进行中...{% else %}讨论已完成{% endif %}
+            </p>
+        </header>
+
+        <!-- 流程进度条 -->
+        <div class="workflow-progress" id="workflow-progress">
+            <div class="workflow-step" id="step-proposal">
+                <div class="step-icon"></div>
+                <div class="step-label">提案</div>
+            </div>
+            <div class="workflow-arrow">→</div>
+            <div class="workflow-step" id="step-voting">
+                <div class="step-icon">🗳️</div>
+                <div class="step-label">投票</div>
+            </div>
+            <div class="workflow-arrow">→</div>
+            <div class="workflow-step" id="step-refinement">
+                <div class="step-icon">🔧</div>
+                <div class="step-label">完善</div>
+            </div>
+            <div class="workflow-arrow">→</div>
+            <div class="workflow-step" id="step-complete">
+                <div class="step-icon">✅</div>
+                <div class="step-label">完成</div>
+            </div>
+        </div>
+
+        <div class="controls" id="audio-controls">
+            <button id="play-all-btn" onclick="playAll()">▶️ 连续播放</button>
+            <button id="pause-btn" onclick="pauseAll()">️ 暂停</button>
+            <label>
+                播放速度：
+                <select id="speed-select" onchange="changeSpeed(this.value)">
+                    <option value="1.0">1.0x</option>
+                    <option value="1.25">1.25x</option>
+                    <option value="1.5">1.5x</option>
+                    <option value="2.0">2.0x</option>
+                </select>
+            </label>
+        </div>
+
+        <div class="convergence-bar" id="convergence-bar" style="display: none;">
+            <div class="convergence-progress"></div>
+            <span class="convergence-text">无改进: 0%</span>
+        </div>
+
+        <!-- 讨论过程视图 -->
+        <div id="discussion-area" class="discussion-area">
+            <!-- 辩论内容将在这里显示 -->
+        </div>
+
+        <div class="podcast-section">
+            <button id="make-podcast-btn" class="make-podcast-btn" onclick="generatePodcast()" style="display: none;">
+                 制作播客
+            </button>
+            <div id="podcast-status" class="podcast-status" style="display: none;"></div>
+            <div id="podcast-player" class="podcast-player" style="display: none;"></div>
+        </div>
+    </div>
+
+    <!-- 历史事件数据，供 JS 回放 -->
+    <script id="history-data" type="application/json">{{ discussion.events | tojson }}</script>
+
+    <!-- 播客数据（如果存在） -->
+    {% if discussion.podcast %}
+    <script id="podcast-data" type="application/json">{{ discussion.podcast | tojson }}</script>
+    {% endif %}
+
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="{{ url_for('static', filename='js/discussion.js') }}"></script>
+    <script>
+        // 初始化讨论页面
+        initDiscussion('{{ discussion.id }}', {{ (discussion.status == 'ongoing') | tojson }});
+    </script>
+</body>
+</html>

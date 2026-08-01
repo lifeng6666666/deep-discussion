@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deep Discussion - 多模型辩论</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎙️ Deep Discussion</h1>
+            <p>多模型辩论系统 - 听看平衡的实时辩论</p>
+        </header>
+
+        <div class="input-section">
+            <textarea id="question-input" placeholder="请输入讨论问题..."></textarea>
+            <button id="start-btn" onclick="startDiscussion()">开始辩论</button>
+        </div>
+
+        <div class="discussion-list-section">
+            <h2 class="list-title">💬 历史讨论</h2>
+            <div id="discussion-list" class="discussion-list">
+                {% if discussions %}
+                    {% for d in discussions %}
+                    <div class="discussion-item-wrapper">
+                        <a class="discussion-item" href="/discussion/{{ d.id }}">
+                            <div class="item-question">{{ d.question }}</div>
+                            <div class="item-meta">
+                                <span class="item-time">🕐 {{ d.created_at }}</span>
+                                <span class="item-status status-{{ d.status }}">{{ '进行中' if d.status == 'ongoing' else '已完成' }}</span>
+                                <span class="item-count">{{ d.event_count }} 条发言</span>
+                            </div>
+                        </a>
+                        <button class="delete-btn" onclick="deleteDiscussion('{{ d.id }}', this)" title="删除讨论">🗑️</button>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="empty-tip">还没有讨论，输入问题开始第一个吧</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script>
+        const socket = io();
+
+        // 创建讨论后跳转
+        socket.on('discussion_created', (data) => {
+            window.location.href = '/discussion/' + data.discussion_id;
+        });
+
+        function startDiscussion() {
+            const question = document.getElementById('question-input').value.trim();
+            if (!question) {
+                alert('请输入讨论问题');
+                return;
+            }
+            const btn = document.getElementById('start-btn');
+            btn.disabled = true;
+            btn.textContent = '创建中...';
+            socket.emit('start_discussion', { question });
+        }
+
+        // 回车快捷提交（Ctrl+Enter）
+        document.getElementById('question-input').addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === 'Enter') {
+                startDiscussion();
+            }
+        });
+
+        // 删除讨论
+        function deleteDiscussion(id, btn) {
+            if (!confirm('确定要删除这条讨论记录吗？')) return;
+            btn.disabled = true;
+            btn.textContent = '⏳';
+            fetch('/api/discussion/' + id, { method: 'DELETE' })
+                .then(r => r.json())
+                .then(data => {
+                    if (data.success) {
+                        const wrapper = btn.closest('.discussion-item-wrapper');
+                        wrapper.style.opacity = '0';
+                        wrapper.style.transition = 'opacity 0.3s';
+                        setTimeout(() => wrapper.remove(), 300);
+                        // 检查是否还有讨论
+                        const list = document.getElementById('discussion-list');
+                        if (!list.querySelector('.discussion-item-wrapper')) {
+                            list.innerHTML = '<div class="empty-tip">还没有讨论，输入问题开始第一个吧</div>';
+                        }
+                    } else {
+                        alert('删除失败: ' + (data.message || '未知错误'));
+                        btn.disabled = false;
+                        btn.textContent = '🗑️';
+                    }
+                })
+                .catch(err => {
+                    alert('删除失败: ' + err);
+                    btn.disabled = false;
+                    btn.textContent = '️';
+                });
+        }
+    </script>
+</body>
+</html>
