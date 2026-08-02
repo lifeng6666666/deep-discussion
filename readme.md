@@ -4,9 +4,9 @@
 
 ## 🎧 播客讨论实例：每天只有 2 小时自由时间，普通人最该把它投资在哪件事上
 
-**[▶️ 在线试听](podcast_22449ff65bce.mp3)** —— 点击跳转 GitHub 内置播放器
+**[▶️ 在线试听](https://cdn.jsdelivr.net/gh/lifeng6666666/deep-discussion@master/podcast_22449ff65bce.mp3)** —— 浏览器原生播放器，可播放/拖动/调速
 ·
-**[⬇️ 下载 MP3](podcast_22449ff65bce.mp3?raw=true)**
+**[⬇️ 下载 MP3](https://github.com/lifeng6666666/deep-discussion/raw/master/podcast_22449ff65bce.mp3)**
 
 ## 为什么做这个
 
