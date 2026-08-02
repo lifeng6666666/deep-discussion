@@ -4,9 +4,9 @@
 
 ## 🎧 播客讨论实例：每天只有 2 小时自由时间，普通人最该把它投资在哪件事上
 
-<audio controls src="podcast_22449ff65bce.mp3">
-  你的浏览器不支持音频播放，<a href="podcast_22449ff65bce.mp3">点此下载</a>
-</audio>
+**[▶️ 在线试听](podcast_22449ff65bce.mp3)** —— 点击跳转 GitHub 内置播放器
+·
+**[⬇️ 下载 MP3](podcast_22449ff65bce.mp3?raw=true)**
 
 ## 为什么做这个
 
